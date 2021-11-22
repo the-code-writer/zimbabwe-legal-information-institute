@@ -1,0 +1,201 @@
+<template>
+    <div class="page" data-name="legislation">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">${pageName}</div>
+                <div class="right">
+                    <a href="#" class="link icon-only panel-open" data-panel="right"><i
+                            class="icon f7-icons">ellipsis_vertical</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="page-content page-content-bg">
+            <div class="card textured page-cover">
+
+                <div class="card-body">
+
+                    <div class="block text-align-center">
+                        <img src="${images.court_of_arms}" width="200px" style="margin: auto; margin-top: 40px;" alt=""/>
+                    </div>
+                    <div class="block-title-medium article-title legislation-cover-title text-align-center" innerHTML="${articleTitle}" />
+                    <div class="list block block-strong">
+                        <ul>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="icon f7-icons">calendar</i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <div class="item-title">Date</div>
+                                        <div class="item-after">${articleDate}</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="icon f7-icons">rectangle_stack</i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <div class="item-title">Year</div>
+                                        <div class="item-after">${articleYear}</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="icon f7-icons">doc_append</i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <div class="item-title">Issue Number</div>
+                                        <div class="item-after">${articleIssueNumber}</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="icon f7-icons">doc_text_viewfinder</i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <div class="item-title">Document Size</div>
+                                        <div class="item-after">${articleSize}</div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="block block-strong">
+                        <p class="row" style="margin-top: 20px;">
+                            <button class="col button button-raised button-fill button-large color-red" @click=${downloadPDF}>Download Document</button>
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+            <div style="margin-bottom: 50px;"></div>
+        </div>
+    </div>
+</template>
+<script>
+
+    import konstants from '../../../libs/konstants.js';
+
+    import images from '../../../libs/images.js';
+
+    import helper from '../../../libs/helper.js';
+
+    import gazettes from '../../../storage/data/gazettes/manifest.json';
+
+    export default (props, { $f7, $f7ready, $f7route, $update, $on, $h, $store }) => {
+
+        const pageName = "Zimbabwe Gazette";
+
+        const pageCategory = "gazettes";
+
+        let articleTitle = "";
+
+        let articleDate = "";
+
+        let articleYear = "";
+
+        let articleIssueNumber = "";
+
+        let articleSize = "";
+
+        let articleSlug = "";
+
+        let articleAttachmentUrl = "";
+
+        $on('pageMounted', (e, page) => {
+            console.log('page mounted');
+        });
+
+        $on('pageInit', (e, page) => {
+            console.log('page init');
+            loadPage();
+        });
+        $on('pageBeforeIn', (e, page) => {
+            console.log('page before in');
+        });
+        $on('pageAfterIn', (e, page) => {
+            console.log('page after in');
+        });
+        $on('pageBeforeOut', (e, page) => {
+            console.log('page before out');
+        });
+        $on('pageAfterOut', (e, page) => {
+            console.log('page after out');
+        });
+        $on('pageBeforeUnmount', (e, page) => {
+            console.log('page before unmount');
+        });
+        $on('pageBeforeRemove', (e, page) => {
+            console.log('page before remove');
+        });
+
+        const loadPage = ( ) => {
+
+            console.log("::: gazettes :::", gazettes);
+
+            const pageObject = gazettes[$f7route.params.year][$f7route.params.gazetteIndex];
+
+            articleTitle = pageObject.title.replace("ZW Gvt", "Zimbabwe Government").replace("Dated", "<br/>\nDated");
+
+            articleYear = pageObject.value;
+
+            let articleArray = pageObject.url.split("/");
+
+            articleSlug = articleArray[2];
+
+            let articleArr = articleArray[2].replace("zw-government-gazette-dated-", "").split("-no-");
+
+            articleAttachmentUrl = konstants.appUrl + "/zw_gvt_gazettes/gazette_date_" + articleYear + "/pdf/" + articleSlug + ".pdf";
+
+            helper.snippets.getFileSize(articleAttachmentUrl).then(function (size){
+
+                articleSize = helper.snippets.humanFileSize(size);
+
+            });
+
+            console.log("::: articleAttachmentUrl :::", articleAttachmentUrl);
+
+            articleDate = articleArr[0];
+
+            articleIssueNumber = articleArr[1];
+
+            $f7.preloader.hide();
+
+            $update();
+
+        }
+
+        const downloadPDF = ( ) => {
+
+            $f7.emit(
+                "DOWNLOAD_PDF",
+                {
+                    title: articleTitle,
+                    slug: articleSlug,
+                    letter: articleYear,
+                    url: articleAttachmentUrl,
+                    category: 'gazette'
+                });
+
+        }
+
+        return $render;
+
+    }
+</script>

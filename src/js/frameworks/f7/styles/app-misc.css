@@ -1,0 +1,281 @@
+
+.centerbutton {
+    height: 60px !important;
+    line-height: 54px !important;
+    width: 60px !important;
+    border-radius: 30px !important;
+    margin: 0 15px !important;
+    margin-top: 0px;
+    margin-top: -30px !important;
+    padding: 24px !important;
+    bottom: 10px !important;
+    position: fixed !important;
+    box-shadow: 0 0.5rem 1rem rgba(0, 80, 25, 0.65) !important;
+    -moz-box-shadow: 0 .5rem 1rem rgba(0, 80, 25, 0.65) !important;
+    -ms-box-shadow: 0 .5rem 1rem rgba(0, 80, 25, 0.65) !important;
+    color: var(--f7-theme-color) !important;
+    background-color: #fff;
+    background-image: transparent !important;
+    background-size: 95%;
+    content: '';
+    border: none;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.theme-dark .centerbutton {
+    box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -ms-box-shadow: none !important;
+    color: #999999 !important;
+    background-color: #1c1c1d;
+    border: none;
+}
+
+.tabbar-labels .tabbar-label {
+    font-size: calc(var(--f7-tabbar-label-font-size) * 0.8);
+}
+.theme-dark .navbar-bg, .theme-dark .toolbar {
+    background-color: #252526 !important;
+    color: var(--f7-navbar-bg-color, var(--f7-bars-bg-color));
+}
+.page-content-bg{
+    background-image: url("../assets/bg.png");
+    background-size: 38%;
+    background-position: center;
+}
+
+.theme-dark .page-content-bg{
+    background-image: url("../assets/bg-dark.png");
+    background-size: 38%;
+    background-position: center;
+}
+
+.navbar-inner-logo{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+
+
+.card-home-bg{
+    background-image: url("../assets/banner.png");
+    background-size: cover;
+    background-position: top right;
+    font-weight: 800;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+}
+
+.theme-dark .card-home-bg{
+    background-image: url("../assets/banner.png");
+    background-size: cover;
+    background-position: top right;
+    font-weight: 800;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+}
+
+.header-navbar-logo{
+    max-height: 40px;
+    margin: auto;
+}
+
+.card-icon-img{
+    margin-top: 10px;
+    width: 70%;
+}
+
+.card-sheet-modal-list-icon-img{
+    width: 42px;
+}
+
+.card-sheet-modal-list-icon-img.outline{
+    width: 32px;
+}
+
+.card-icon-title-text{
+    line-height: 22px;
+    font-size: 20px !important;
+    width: 90%;
+    font-weight: 700;
+    position: absolute;
+    padding-top: 60px;
+    left: 0;
+}
+
+.card-icon-title{
+    text-align: center;
+    margin: 0 10px;
+    display: block;
+    clear: both;
+    padding: 12px 0;
+    font-weight: 600;
+}
+
+.panel-left {
+    left: 0;
+    min-width: 300px;
+    width: 80vw;
+    max-width: 380px;
+}
+
+:root {
+    --f7-panel-width: 315px;
+    --f7-panel-bg-color: #fff;
+}
+
+.bg-transparent{
+    background: transparent !important;
+}
+
+.margin-0 {
+    margin: 0px;
+}
+
+.margin-10-0 {
+    margin: 10px 0px;
+}
+
+.drawer-header {
+    background-image: url(../assets/drawer-bg.jpeg);
+    background-size: cover;
+    background-position: center;
+    text-shadow: 2px 2px 6px rgb(0 0 0 / 50%);
+    padding: 30vw 5px 0 5px;
+}
+
+.theme-dark .drawer-header {
+    background-image: url(../assets/drawer-bg-dark.jpg);
+    background-size: cover;
+    background-position: center;
+    text-shadow: 2px 2px 6px rgb(0 0 0 / 50%);
+    padding: 30vw 5px 0 5px;
+}
+
+.font-size-24px{
+    font-size: 24px !important;
+}
+.font-size-40px{
+    font-size: 40px !important;
+}
+.font-size-60px{
+    font-size: 60px !important;
+}
+
+.panel-left-drawer-menu-items .list .item-media {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+    align-items: center;
+    box-sizing: border-box;
+    padding-bottom: var(--f7-list-item-padding-vertical);
+    padding-top: var(--f7-list-item-padding-vertical);
+    justify-content: center;
+}
+
+.simplaz li {
+    position: relative;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    align-content: center;
+    line-height: var(--f7-list-item-min-height);
+    height: var(--f7-list-item-min-height);
+    padding-left: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-left));
+    padding-right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-safe-area-right));
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+
+.md .contacts-list.simplaz li:not(.list-group-title) {
+    padding-left: 28px;
+}
+
+.article-title{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.article-content{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.article-content .place-name,.article-content h1,.article-content h2{
+    display: none;
+}
+
+.legislation-cover-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--f7-theme-color-dark);
+    margin: 20px;
+}
+
+.md .list-group-title {
+    box-shadow: 2px 2px 7px #799e8b !important;
+    background-color: #ddf0e7 !important;
+    width: 100% !important;
+    height: calc(var(--f7-list-group-title-height) * 0.65) !important;
+    line-height: unset !important;
+}
+
+.theme-dark.md .list-group-title {
+    box-shadow: none !important;
+    background-color: #252526 !important;
+    width: 100% !important;
+    height: calc(var(--f7-list-group-title-height) * 0.65) !important;
+    line-height: unset !important;
+}
+
+.ios .list-group-title {
+    box-shadow: none;
+    background-color: #efefef !important;
+    width: 100% !important;
+    height: calc(var(--f7-list-group-title-height) * 0.65) !important;
+    line-height: unset !important;
+}
+
+.theme-dark.ios .list-group-title {
+    background-color: #252526 !important;
+}
+
+.card.textured {
+    background-image: url(../assets/paper.jpg) !important;
+    background-size: cover !important;
+    background: #eff5eb;
+    box-shadow: var(--f7-card-box-shadow);
+}
+
+.theme-dark .card.textured {
+    background-image: url(../assets/paper-dark.jpg) !important;
+    background-size: cover !important;
+    background: #252526;
+    box-shadow: var(--f7-card-box-shadow);
+}
+
+.padding-0{
+    padding: 0 !important;
+}
+
+.min-width-20{
+    min-width: 20px;
+}
+
+.md .contacts-list .list-group-title + li {
+    margin-top: 0 !important;
+}
+
+.padding-left-32{
+    padding-left: 32px;
+}

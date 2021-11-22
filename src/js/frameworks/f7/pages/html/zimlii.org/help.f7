@@ -1,0 +1,208 @@
+<template>
+    <div class="page" data-name="about">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">Help</div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="block-title">Help about document lookup</div>
+            <div class="block">
+                <article role="article" class="node node--type-page node--view-mode-full clearfix">
+                    <div class="node__content clearfix">
+
+                        <div class="field field--name-field-sub-title field--type-string field--label-hidden field__item">
+                            How to browse and search for information on ZimLII
+                        </div>
+
+                        <div class="clearfix text-formatted field field--name-body field--type-text-with-summary field--label-hidden field__item">
+                            <p>&nbsp;</p>
+                            <p><strong>Browse</strong></p>
+                            <p>Browsing for a judgment works best if you know either or a combination of a case name,
+                                judgment date, and the court in which a judgment was handed down. &nbsp;All judgments’
+                                databases are arranged alphabetically and chronologically.</p>
+                            <p>&nbsp;</p>
+                            <p><strong>Search</strong></p>
+                            <p>This is a full-text search engine. Researchers have to think carefully and input search
+                                terms (words and phrases) that are most likely to appear in the body of the document
+                                (judgment) the user is trying to retrieve. The best words (or phrases) to choose are
+                                those which are unique or particularly distinctive and are, of course, relevant to the
+                                subject matter of your query.</p>
+                            <p>&nbsp;</p>
+                            <p><strong>Search results</strong></p>
+                            <p>Search results will list all relevant cases, starting with the document scoring the
+                                highest relevance. Search results are ranked according to the appearance of the search
+                                term in, in order of importance, the title, headings, emphasized text, and the body of
+                                the text of a document. If you are searching for a case by its case name, your first
+                                search result will likely be the case with that title, instead of another case, citing
+                                the one you are searching for.</p>
+                            <p>The search results page lists all relevant documents. The searched keyword(s) or
+                                phrase(s) are bolded in a snippet below each search result. You will also see flynotes
+                                (where such are available)&nbsp;in the search results, alongside key information
+                                regarding the document you are researching.</p>
+                            <p>&nbsp;</p>
+                            <p><strong>Filtering</strong></p>
+                            <p>On search results page users can filter documents by collection, court, judgment date and
+                                even subject matter (coming soon!).</p>
+                            <p>&nbsp;</p>
+                            <p><strong>Advanced search techniques</strong></p>
+                            <p><strong>Terms and phrases</strong></p>
+                            <p>A query is broken up into terms and operators. There are two types of terms: Single Terms
+                                and Phrases.</p>
+                            <p>A Single Term is a single word such
+                                as<strong>&nbsp;"crime"</strong>&nbsp;or&nbsp;<strong>"tort"</strong>.</p>
+                            <p>A Phrase is a group of words surrounded by double quotes such as&nbsp;<strong>"ultra
+                                vires"</strong>.</p>
+                            <p>Multiple terms can be combined together with Boolean operators to form a more complex
+                                query (see below).</p>
+                            <p>&nbsp;</p>
+                            <p><strong>Wildcards</strong></p>
+                            <p>Apache SOLR supports single and multiple character wildcard searches within single terms
+                                (not within phrase queries).</p>
+                            <p>To perform a single character wildcard search use the&nbsp;<strong>?</strong>&nbsp;symbol.
+                            </p>
+                            <p>To perform a multiple character wildcard search use the *&nbsp;symbol.</p>
+                            <p>The single character wildcard search looks for terms that match that with the single
+                                character replaced. For example, to search for "text" or "test" you can use the
+                                search:</p>
+                            <blockquote><p>te?t</p>
+                            </blockquote>
+                            <p>Multiple character wildcard searches look for 0 or more characters. For example, to
+                                search for work, worker or workforce, you can use the search:</p>
+                            <blockquote><p>work*</p>
+                            </blockquote>
+                            <p>You can also use the wildcard searches in the middle of a term.</p>
+                            <blockquote><p>wom*n (will search for woman and women)</p>
+                            </blockquote>
+                            <p>Note: You cannot use a&nbsp;<strong>*</strong>&nbsp;or&nbsp;<strong>?</strong>&nbsp;symbol
+                                as the first character of a search.</p>
+                            <p>&nbsp;</p>
+                            <p><strong>Fuzzy search</strong></p>
+                            <p>Apache SOLR supports fuzzy searches based on the Levenshtein Distance, or Edit Distance
+                                algorithm. To do a fuzzy search use the tilde, "~", symbol at the end of a Single word
+                                Term. For example to search for a term similar in spelling to "roam" use the fuzzy
+                                search:</p>
+                            <blockquote><p>roam~</p>
+                            </blockquote>
+                            <p>This search will find terms like foam and roams.</p>
+                            <p>&nbsp;</p>
+                            <p><strong>Proximity searches</strong></p>
+                            <p>Apache SOLR supports finding words are within a specific distance away. To do a proximity
+                                search use the tilde&nbsp;<strong>~</strong>&nbsp;symbol at the end of a Phrase. For
+                                example to search for
+                                a&nbsp;<strong>"public"</strong>&nbsp;and&nbsp;<strong>"covid"</strong>&nbsp;<strong>within
+                                    10 words of each other&nbsp;</strong>in a document use the search:</p>
+                            <blockquote><p>“public covid"~10</p>
+                            </blockquote>
+                            <p><strong>Boosting a term</strong></p>
+                            <p>Apache SOLR provides the relevance level of matching documents based on the terms found.
+                                To boost a term use the caret&nbsp;<strong>^</strong>&nbsp;symbol with a boost factor (a
+                                number) at the end of the term you are searching. The higher the boost factor, the more
+                                relevant the term will be.</p>
+                            <p>Boosting allows you to control the relevance of a document by boosting its term. For
+                                example, if you are searching for</p>
+                            <blockquote><p>Compensation dismissal</p>
+                            </blockquote>
+                            <p>and you want the term&nbsp;<strong>"compensation"</strong>&nbsp;to be the more relevant
+                                keyword, boost it using the&nbsp;<strong>^&nbsp;</strong>symbol (no space between the
+                                term and the special symbol) along with the boost factor next to the term. You would
+                                type:</p>
+                            <blockquote><p>compensation^4 dismissal</p>
+                            </blockquote>
+                            <p>This will make documents with the term compensation appear more relevant. You can also
+                                boost Phrase Terms as in the example:</p>
+                            <blockquote><p>"Compensation for dismissal"^4 "labour law"</p>
+                            </blockquote>
+                            <p>By default, the boost factor is 1. Although the boost factor must be positive, it can be
+                                less than 1 (e.g. 0.2)</p>
+                            <p>&nbsp;</p>
+                            <p><strong>Boolean operators</strong></p>
+                            <p>Boolean operators allow terms to be combined through logic operators. Lucene supports&nbsp;<strong>AND</strong>,&nbsp;<strong>+</strong>,&nbsp;<strong>OR</strong>,&nbsp;<strong>NOT</strong>&nbsp;and&nbsp;<strong>-</strong>&nbsp;as
+                                Boolean operators (Note: Boolean operators must be ALL CAPS).</p>
+                            <p>The&nbsp;<strong>OR&nbsp;</strong>operator is the default conjunction operator. This
+                                means that if there is no Boolean operator between two terms,
+                                the&nbsp;<strong>OR&nbsp;</strong>operator is used. The&nbsp;<strong>OR&nbsp;</strong>operator
+                                links two terms and finds a matching document if either of the terms exists in a
+                                document. This is equivalent to a union using sets. The symbol || can be used in place
+                                of the word&nbsp;<strong>OR</strong>.</p>
+                            <p>To search for documents that contain either<strong>&nbsp;"copyright
+                                infringement"</strong>&nbsp;or just&nbsp;<strong>"copyright"&nbsp;</strong>use the
+                                query:</p>
+                            <blockquote><p>"Copyright infringement" copyright</p>
+                                <p>or</p>
+                                <p>"Copyright infringement" OR copyright</p>
+                            </blockquote>
+                            <p>&nbsp;</p>
+                            <p><strong>AND</strong></p>
+                            <p>The AND operator matches documents where both terms exist anywhere in the text of a
+                                single document. This is equivalent to an intersection using sets. The symbol &amp;&amp;
+                                can be used in place of the word AND.</p>
+                            <p>To search for documents that contain "copyright infringement" and "copyright violation"
+                                use the query:</p>
+                            <blockquote><p>"copyright infringement" AND "copyright violation"</p>
+                            </blockquote>
+                            <p><strong>Required operator +</strong></p>
+                            <p>The&nbsp;<strong>+</strong>&nbsp;or&nbsp;<strong>required operator&nbsp;</strong>requires
+                                that the term after the&nbsp;<strong>+</strong>&nbsp;symbol exist somewhere in the field
+                                of a single document.</p>
+                            <p>&nbsp;</p>
+                            <p>To search for documents that must contain&nbsp;<strong>"copyright"</strong>&nbsp;and may
+                                contain "<strong>infringement</strong>" use the query:</p>
+                            <blockquote><p>+ copyright infringement</p>
+                            </blockquote>
+                            <p><strong>NOT</strong></p>
+                            <p>The&nbsp;<strong>NOT&nbsp;</strong>operator excludes documents that contain the term
+                                after&nbsp;<strong>NOT</strong>. This is equivalent to a difference using sets. The
+                                symbol&nbsp;<strong>!&nbsp;</strong>can be used in place of the
+                                word&nbsp;<strong>NOT</strong>.</p>
+                            <p>&nbsp;</p>
+                            <p>To search for documents that contain "<strong>copyright infringement</strong>" but not
+                                "<strong>copyright violation</strong>" use the query:</p>
+                            <blockquote><p>"copyright infringement" NOT "copyright violation"</p>
+                            </blockquote>
+                            <p>Note: The&nbsp;<strong>NOT&nbsp;</strong>operator cannot be used with just one term. For
+                                example, the following search will return no results:</p>
+                            <blockquote><p>NOT "copyright infringement"</p>
+                            </blockquote>
+                            <p><strong>Prohibit operator -</strong></p>
+                            <p>The&nbsp;<strong>-&nbsp;</strong>or&nbsp;<strong>prohibit operator</strong>&nbsp;excludes
+                                documents that contain the term after the&nbsp;<strong>-&nbsp;</strong>symbol.</p>
+                            <p>To search for documents that contain "<strong>copyright infringement</strong>" but not
+                                "<strong>copyright violation</strong>" use the query:</p>
+                            <blockquote><p>"Copyright infringement" -"copyright violation"</p>
+                            </blockquote>
+                            <p><strong>Grouping</strong></p>
+                            <p>Apache SOLR supports using parentheses to group clauses to form sub queries. This can be
+                                very useful if you want to control the boolean logic for a query.</p>
+                            <p>To search for either "<strong>copyright exception</strong>" or "<strong>open
+                                access</strong>" and "<strong>fair use</strong>" use the query:</p>
+                            <blockquote><p>(“copyright exception” OR “open access”) AND “fair use”</p>
+                            </blockquote>
+                        </div>
+
+                        <div class="field field--name-field-paragraphs field--type-entity-reference-revisions field--label-hidden field__items">
+                            <div class="field__item">
+                                <div class="paragraph paragraph--type--billboard-block paragraph--view-mode--default">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    export default () => {
+        return $render;
+    };
+</script>

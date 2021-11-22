@@ -1,0 +1,170 @@
+<template>
+    <div class="page" data-name="legislation">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link icon-only panel-open" data-panel="left">
+                        <i class="icon material-icons if-md">menu</i>
+                    </a>
+                </div>
+                <div class="title">${pageName}</div>
+                <div class="right">
+                    <a href="#" class="link icon-only panel-open" data-panel="right"><i
+                            class="icon f7-icons">ellipsis_vertical</i>
+                    </a>
+                </div>
+                <div class="subnavbar">
+                    <form class="searchbar gazettes">
+                        <div class="searchbar-inner">
+                            <div class="searchbar-input-wrap">
+                                <input type="search" placeholder="Search" />
+                                <i class="searchbar-icon"></i>
+                                <span class="input-clear-button"></span>
+                            </div>
+                            <span class="searchbar-disable-button if-not-aurora">Cancel</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="list-index"></div>
+        <div class="page-content">
+            <div class="searchbar-backdrop"></div>
+            <div class="block searchbar-hide-on-search">
+                <p>Began searching the articles by clicking the search icon</p>
+            </div>
+            <div class="list links-list contacts-list simplaz">
+
+                ${$store.getters.getGazettes.value.map((item, index) => $h`
+
+                <div class="list-group searchbar-found">
+                    <ul>
+
+
+                        ${loading ? $h`
+
+                        ${[1,2,3,4,5,6,7,8,9].map((dummy, index) => $h`
+
+                        <li class="item-content skeleton-text skeleton-effect-wave">
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">Loading gazette titles...</div>
+                                </div>
+                            </div>
+                        </li>
+
+                        `)}
+
+                        ` : $h`
+
+                        <li class="list-group-title" title=""  >
+                            <strong>${item[0]}</strong>
+                        </li>
+
+                        ${item[1].map((gazette, index) => $h`
+
+                        <li class="no-chevron padding-0">
+                            <a href="/gazette/${item[0]}/${index}/" class="item-content" >
+                                <div class="item-media min-width-20">
+                                    <img src="${images.pdf}" width="20px" />
+                                </div>
+                                <div class="item-inner">
+                                    <div class="item-title">
+                                        ${gazette.title}
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+
+                        `)}
+
+                        `}
+
+                    </ul>
+                </div>
+
+                `)}
+
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+
+    import konstants from '../../../libs/konstants.js';
+
+    import images from '../../../libs/images.js';
+
+    import helper from '../../../libs/helper.js';
+
+    import gazettes from '../../../storage/data/gazettes/manifest.json';
+
+    export default (props, { $f7, $f7ready, $f7route, $update, $on, $h, $store }) => {
+
+        const pageName = "Zim Government Gazettes";
+
+        let loading = true;
+
+        $on('pageMounted', (e, page) => {
+            console.log('page mounted');
+
+        });
+
+        $on('pageInit', (e, page) => {
+            console.log('page init');
+            if (pageName === "Zim Government Gazettes") {
+
+                console.log(":: gazettes ::", Object.keys(gazettes).map((key) => [key, gazettes[key]]));
+
+                $store.dispatch('updateGazettes', gazettes);
+
+                setTimeout(function () {
+
+                    // create searchbar
+                    var searchbar_gazettes = $f7.searchbar.create({
+                        el: '.searchbar.gazettes',
+                        searchContainer: '.list',
+                        searchIn: '.item-title',
+                        on: {
+                            search(sb, query, previousQuery) {
+                                console.log(query, previousQuery);
+                            }
+                        }
+                    });
+
+                    loading = false;
+
+                    $update();
+
+                    $f7.preloader.hide();
+
+                }, 1500);
+
+            }
+
+        });
+        $on('pageBeforeIn', (e, page) => {
+            console.log('page before in');
+        });
+        $on('pageAfterIn', (e, page) => {
+            console.log('page after in');
+        });
+        $on('pageBeforeOut', (e, page) => {
+            console.log('page before out');
+        });
+        $on('pageAfterOut', (e, page) => {
+            console.log('page after out');
+        });
+        $on('pageBeforeUnmount', (e, page) => {
+            console.log('page before unmount');
+        });
+        $on('pageBeforeRemove', (e, page) => {
+            console.log('page before remove');
+        });
+
+        return $render;
+
+    }
+</script>

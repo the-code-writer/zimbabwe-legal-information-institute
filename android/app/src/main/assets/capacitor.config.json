@@ -1,0 +1,20 @@
+{
+	"appId": "org.zimlii.app",
+	"appName": "ZimLII",
+	"bundledWebRuntime": false,
+	"npmClient": "npm",
+	"webDir": "www",
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 0
+		},
+		"FirebaseAuthentication": {
+			"skipNativeAuth": false,
+			"providers": [
+				"apple.com",
+				"google.com"
+			]
+		}
+	},
+	"cordova": {}
+}

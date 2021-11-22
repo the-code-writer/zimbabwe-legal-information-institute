@@ -1,0 +1,283 @@
+<template>
+    <div class="page" data-name="legislation">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">${pageName}</div>
+                <div class="right">
+                    <a href="#" class="link icon-only panel-open" data-panel="right"><i
+                            class="icon f7-icons">ellipsis_vertical</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="page-content page-content-bg">
+            <div class="card page-cover">
+
+                <div class="card-body">
+
+                    <div class="block text-align-center">
+                        <img src="${images.court_of_arms}" width="200px" style="margin: auto; margin-top: 40px;" alt=""/>
+                    </div>
+                    <div class="block-title-medium article-title legislation-cover-title text-align-center">
+                        ${articleTitle}
+                    </div>
+                    <div class="article-content text-align-left" innerHTML=${articleContent}></div>
+
+                </div>
+
+            </div>
+
+            <div class="card page-article-contents">
+
+                <div class="card-header">
+                    Table of Contents
+                </div>
+
+                <div class="card-body">
+
+                    <div class="list simple-list article-content text-align-left" >
+                        <ul innerHTML=${articleTableOfContents} />
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card page-article-contents">
+
+                <div class="card-body">
+
+                    <div class="article-content text-align-left" innerHTML=${articleFullContent} />
+
+                </div>
+
+            </div>
+
+
+            <div class="card page-article-contents">
+
+                <div class="card-body">
+
+                    <div class="block block-strong">
+                        <p class="row" >
+                            <button class="col button button-raised button-fill button-large color-red" @click=${downloadPDF}>Download Document</button>
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div style="margin-bottom: 50px;"></div>
+
+        </div>
+    </div>
+</template>
+<script>
+
+    import konstants from '../../../libs/konstants.js';
+
+    import images from '../../../libs/images.js';
+
+    import helper from '../../../libs/helper.js';
+
+    export default (props, { $f7, $f7ready, $f7route, $update, $on, $h, $store }) => {
+
+        const pageName = "Legislation Details";
+
+        const pageCategory = "legislation";
+
+        let articleTitle = "";
+
+        let articleContent = "";
+
+        let articleTableOfContents = "";
+
+        let articleFullContent = "";
+
+        let articleAttachmentUrl = "";
+
+        let articleLink = "" ;
+
+        let articleSlug = "";
+
+        $on('pageMounted', (e, page) => {
+            console.log('page mounted');
+            $f7.preloader.show();
+        });
+
+        $on('pageInit', (e, page) => {
+            console.log('page init');
+            readManifestFile();
+        });
+        $on('pageBeforeIn', (e, page) => {
+            console.log('page before in');
+        });
+        $on('pageAfterIn', (e, page) => {
+            console.log('page after in');
+        });
+        $on('pageBeforeOut', (e, page) => {
+            console.log('page before out');
+        });
+        $on('pageAfterOut', (e, page) => {
+            console.log('page after out');
+        });
+        $on('pageBeforeUnmount', (e, page) => {
+            console.log('page before unmount');
+        });
+        $on('pageBeforeRemove', (e, page) => {
+            console.log('page before remove');
+        });
+
+        const loadPage = async ( ) => {
+
+            $f7.preloader.show();
+
+            $f7.progressbar.show('multi');
+
+            const path = pageCategory + '/' + $f7route.params.letter + '/' + $f7route.params.slug;
+
+            const file = 'manifest.json';
+
+            const fullPath = path + '/' +  file;
+
+            $f7.request.get( konstants.appUrl + '/' + fullPath)
+                .then(function (res) {
+
+                    if(res.status === 200) {
+
+                        let contents = res.data;
+
+                        CapFilesystem.writeFile({
+                            path: fullPath,
+                            data: contents,
+                            directory: CapDirectory.External,
+                            encoding: CapEncoding.UTF8,
+                            recursive: true
+                        }).then(function (writtenData) {
+
+                            console.log("::writtenData::", writtenData.uri);
+
+                            parseJsonManifestFile( contents );
+
+                        });
+
+                        $f7.preloader.hide();
+
+                        $f7.progressbar.hide();
+
+                    }else{
+
+                        $f7.preloader.hide();
+
+                        $f7.progressbar.hide();
+
+                        $f7.dialog.alert("Failed to load file. Please check your internet settings.");
+
+                    }
+
+                })
+                .catch(function (err) {
+
+                    $f7.preloader.hide();
+
+                    $f7.progressbar.hide();
+
+                    $f7.dialog.alert("Failed to download PDF file. Please check your internet settings.");
+
+                    console.log(err.xhr)
+                    console.log(err.status)
+                    console.log(err.message)
+                });
+
+            $update();
+
+        }
+
+        const readManifestFile = async () => {
+
+            $f7.preloader.show();
+
+            $f7.progressbar.show('multi');
+
+            articleSlug = $f7route.params.slug;
+
+            const path = pageCategory + '/' + $f7route.params.letter + '/' + $f7route.params.slug;
+
+            const file = 'manifest.json';
+
+            const fullPath = path + '/' +  file;
+
+            CapFilesystem.readFile({
+                path: fullPath,
+                directory: CapDirectory.External ,
+                encoding: CapEncoding.UTF8,
+            }).then(function ( contents ){
+
+                console.log(":: LOCAL FILE FOUND ::", [fullPath, contents.data]);
+
+                parseJsonManifestFile( contents.data );
+
+            },function ( error){
+
+                loadPage();
+
+            });
+
+        };
+
+        const parseJsonManifestFile = ( manifestFile ) => {
+
+            if (typeof manifestFile !== "object") {
+
+                manifestFile = JSON.parse(manifestFile);
+
+            }
+
+            console.log("::manifestFile:2:", manifestFile);
+
+            articleTitle = manifestFile.name;
+
+            articleContent = manifestFile.coverPage;
+
+            articleTableOfContents = manifestFile.tableOfContents;
+
+            articleFullContent = manifestFile.article;
+
+            articleAttachmentUrl = manifestFile.attachmentUrl;
+
+            articleLink = manifestFile.link;
+
+            $f7.preloader.hide();
+
+            $f7.progressbar.hide();
+
+            $update();
+
+        };
+
+        const downloadPDF = ( ) => {
+
+            $f7.emit(
+                "DOWNLOAD_PDF",
+                {
+                    title: articleTitle,
+                    slug: $f7route.params.slug,
+                    letter: $f7route.params.letter,
+                    url: articleAttachmentUrl,
+                    category: 'legislation'
+                });
+
+        }
+
+        return $render;
+
+    }
+</script>

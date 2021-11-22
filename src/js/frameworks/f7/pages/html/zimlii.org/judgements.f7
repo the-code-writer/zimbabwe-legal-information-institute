@@ -1,0 +1,177 @@
+<template>
+    <div class="page" data-name="legislation">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">${pageName}</div>
+                <div class="right">
+                    <a href="#" class="link icon-only panel-open" data-panel="right"><i
+                            class="icon f7-icons">ellipsis_vertical</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="toolbar tabbar toolbar-top">
+            <div class="toolbar-inner">
+                <a href="#tab-judgements-1" class="tab-link tab-link-active">Courts</a>
+                <a href="#tab-judgements-2" class="tab-link">Period</a>
+            </div>
+        </div>
+        <!-- Tabs animated wrapper, required to switch tabs with transition -->
+        <div class="tabs-animated-wrap tabs-swipeable-wrap">
+
+            <!-- Tabs, tabs wrapper -->
+            <div class="tabs">
+                <!-- Tab 1, active by default -->
+                <div id="tab-judgements-1" class="page-content page-content-bg tab tab-active">
+                        <div class="card textured page-cover">
+                            <div class="card-body">
+                                <div class="block text-align-center">
+                                    <img src="${images.gavel}" width="200px" style="margin: auto; margin-top: 40px;" alt=""/>
+                                </div>
+                                <div class="block-title-medium article-title legislation-cover-title text-align-center" innerHTML="${articleTitle1}" />
+                                <div class="list block block-strong">
+                                    <ul>
+                                        ${judgementsByCourt.map((item, index) => $h`
+                                        <li  @click=${() => judgementsByCourtNavigate(item, index)}>
+                                            <div class="item-content item-link">
+                                                <div class="item-inner">
+                                                    <div class="item-title">${item[0]}</div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        `)}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                <!-- Tab 2 -->
+                <div id="tab-judgements-2" class="page-content page-content-bg tab">
+
+                        <div class="card textured page-cover">
+                            <div class="card-body">
+                                <div class="block text-align-center">
+                                    <img src="${images.gavel}" width="200px" style="margin: auto; margin-top: 40px;" alt=""/>
+                                </div>
+                                <div class="block-title-medium article-title legislation-cover-title text-align-center" innerHTML="${articleTitle2}" />
+                            </div>
+                            <div class="block block-strong">
+                                <p class="row">
+                                    ${judgementsByYear.map((item, index) => $h`
+                                        <button class="col-33 button button-raised" style="margin-bottom: 16px;" @click=${() => judgementsByYearNavigate(item, index)}>
+                                            <strong>${item[0]}</strong>
+                                        </button>
+                                    `)}
+                                </p>
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</template>
+<script>
+
+    import konstants from '../../../libs/konstants.js';
+
+    import images from '../../../libs/images.js';
+
+    import helper from '../../../libs/helper.js';
+
+    import fbdb from '../../../storage/data/db.json';
+
+    import db from "../../../libs/db";
+
+    export default (props, { $f7, $f7ready, $f7route, $update, $on, $h, $store }) => {
+
+        const pageName = "Judgements / Cases";
+
+        const pageCategory = "judgements";
+
+        const articleTitle = "Judgements";
+
+        const articleTitle1 = "Judgements by Courts";
+
+        const articleTitle2 = "Judgements by Years";
+
+        let loading = true;
+
+        let judgementsByYear = [];
+
+        let judgementsByCourt = [];
+
+        $on('pageMounted', (e, page) => {
+            console.log('page mounted');
+        });
+
+        $on('pageInit', (e, page) => {
+            console.log('page init');
+            loadPage();
+        });
+        $on('pageBeforeIn', (e, page) => {
+            console.log('page before in');
+        });
+        $on('pageAfterIn', (e, page) => {
+            console.log('page after in');
+        });
+        $on('pageBeforeOut', (e, page) => {
+            console.log('page before out');
+        });
+        $on('pageAfterOut', (e, page) => {
+            console.log('page after out');
+        });
+        $on('pageBeforeUnmount', (e, page) => {
+            console.log('page before unmount');
+        });
+        $on('pageBeforeRemove', (e, page) => {
+            console.log('page before remove');
+        });
+
+        const loadPage = ( ) => {
+
+            const judgements = fbdb.categories.judgements;
+
+            judgementsByYear = helper.snippets.getArray(judgements.years);
+
+            judgementsByCourt = helper.snippets.getArray(judgements.courts);
+
+            loading = false;
+
+            $update();
+
+            console.log("::: judgements :::", [judgementsByYear, judgementsByCourt]);
+
+            $f7.preloader.hide();
+
+        }
+
+        const judgementsByCourtNavigate = (item, index ) => {
+
+            console.log("::: judgementsByCourtNavigate :::", [item, index]);
+
+            $update();
+
+        }
+
+        const judgementsByYearNavigate = (item, index ) => {
+
+            console.log("::: judgementsByYearNavigate :::", [item, index]);
+
+            $update();
+
+        }
+
+        return $render;
+
+    }
+</script>

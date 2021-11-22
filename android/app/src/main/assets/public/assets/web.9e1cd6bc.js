@@ -1,0 +1,1 @@
+import{W as a}from"./vendor.766e96b7.js";class i extends a{async share(e){if(typeof navigator=="undefined"||!navigator.share)throw this.unavailable("Share API not available in this browser");return await navigator.share({title:e.title,text:e.text,url:e.url}),{}}}export{i as ShareWeb};

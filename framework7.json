@@ -1,0 +1,28 @@
+{
+  "cwd": "C:\\apps\\ionic\\org.zimlii.app",
+  "type": [
+    "web",
+    "capacitor",
+    "pwa"
+  ],
+  "name": "ZimLII",
+  "framework": "core",
+  "template": "tabs",
+  "bundler": "vite",
+  "cssPreProcessor": false,
+  "theming": {
+    "customColor": true,
+    "color": "#138f51",
+    "darkTheme": false,
+    "iconFonts": true,
+    "fillBars": true
+  },
+  "customBuild": false,
+  "pkg": "org.zimlii.app",
+  "capacitor": {
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  }
+}

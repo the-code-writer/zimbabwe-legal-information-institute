@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "611024240423",
+    "firebase_url": "https://zimlii-org-default-rtdb.firebaseio.com",
+    "project_id": "zimlii-org",
+    "storage_bucket": "zimlii-org.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611024240423:android:d7f67d1be0c6e9856fb302",
+        "android_client_info": {
+          "package_name": "org.zimlii.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611024240423-qp155ie2s7j2shlpia6v1bpnggttfmqo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.zimlii.app",
+            "certificate_hash": "d622c811bae6e065cd22dd0e4af4d63bbdd8310e"
+          }
+        },
+        {
+          "client_id": "611024240423-f7dsum499r9vqb5oighrkbl0n8opuhl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN4YKEjoz2RWod_L7sKP7oJJiRz0NYbp0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611024240423-f7dsum499r9vqb5oighrkbl0n8opuhl5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,808 @@
+<template>
+    <div class="page" data-name="home">
+        <!-- Top Navbar -->
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner navbar-inner-logo">
+                <div class="left">
+                    <a href="#" class="link icon-only panel-open" data-panel="left">
+                        <i class="icon material-icons if-md">menu</i>
+                    </a>
+                </div>
+                <div class="title sliding text-align-center" style="width: 100%;">
+                    <img src="${images.logo}" class="header-navbar-logo"/>
+                </div>
+                <div class="right">
+                    <a href="#" class="link icon-only panel-open" data-panel="right"><i
+                            class="icon f7-icons">search</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrollable page content-->
+        <div class="page-content page-content-bg">
+
+            <div class="card card-expandable" style="height:165px;">
+                <div class="card-content">
+                    <div class="card-home-bg" style="height: 165px; ">
+                        <div class="card-header text-color-white display-block card-icon-title-text">ZIMLII<br/>
+                            <small> Welcome to the Zimbabwe Legal Information Institute
+                                ZimLII publishes the law of Zimbabwe for free access to all</small>
+                        </div>
+                        <a href="#" class="link card-close card-opened-fade-in color-black"
+                           style="position: absolute; right: 15px; top: 15px">
+                            <i class="icon f7-icons">xmark_circle_fill</i>
+                        </a>
+                    </div>
+                    <div class="card-content-padding">
+                        <h3>ZimLII Overview</h3>
+                        <h5>https://zimlii.org/about-us</h5>
+                        <p>The Zimbabwe Legal Information Institute (ZimLII) is an independent not-for-profit Trust
+                            hosting an online repository of legal information from Zimbabwe and beyond.</p>
+                        <p>ZimLII aims to provide for the knowledge needs of a growing group of people learning, aware
+                            and interested in the justice and legal framework of our country.</p>
+                        <p>ZimLII is a member of the global Free Access to Law Movement and works closely with the
+                            African and international free access to law community to promote justice and rule of law by
+                            maximising access at no cost to public legal information.</p>
+                        <p>
+                            <a href="/about/"
+                               class="button button-large button-fill"
+                               @click=${$('.link.card-close.card-opened-fade-in').click()}     >
+                                View More
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-gap">
+                <!-- Each "cell" has col-[width in percents] class -->
+
+                ${homeThumbItems.map((item) => $h`
+
+                <div class="col-50">
+                    <div class="card card-icon-container text-align-center ripple"
+                         @click=${() => recentSheetModalOpenThumb(item)}
+                    >
+                        <img src="${item.img}" class="card-icon-img"/>
+                        <span class="card-icon-title">
+                                ${item.title}
+                        </span>
+                    </div>
+                </div>
+
+                `)}
+
+            </div>
+
+        <div class="row">
+            <div class="block">
+                <p>
+                    <a href="/about/"
+                       class="button button-large button-fill">
+                        About ZimLII
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="block">
+                <p>
+                    <a href="/about/"
+                       class="button button-large button-fill">
+                        Like Our Facebook Page
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="block">
+                <p>
+                    <a href="/about/"
+                       class="button button-large button-fill">
+                        Follow us on Twitter
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="block">
+                <p>
+                    <a href="/about/"
+                       class="button button-large button-fill">
+                        Visit our Website
+                    </a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+        <div class="sheet-modal recent-items-swipe-to-close" style="height:auto; ">
+            <div class="sheet-modal-inner">
+                <div class="page-content">
+                    <div class="block-title block-title-medium">
+                        ${$store.getters.recentItemsSheetModalTitle.value}
+                    </div>
+                    <div class="block">
+                        <div class="list no-hairlines">
+                            <ul>
+
+                                ${$store.getters.recentItemsSheetModalList.value.map((item) => $h`
+
+                                <li>
+                                    <a href="#" class="item-link item-content" @click=${() => openViewFromHomeSheetModal(item) } >
+
+                                        <div class="item-media">
+                                            <img src="${images[item.category]}" class="card-sheet-modal-list-icon-img" />
+                                        </div>
+                                        <div class="item-inner">
+                                            <div class="item-title">
+                                                ${item.title}
+                                                <div class="item-footer">
+                                                    ${item.url}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                `)}
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="block block-strong">
+                        <p class="row">
+                            <button class="col button button-raised button-fill button-large" @click=${viewAll}>View All</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sheet-modal search-swipe-to-close" style="height:auto; ">
+            <div class="sheet-modal-inner">
+                <div class="page-content">
+                    <div class="block-title block-title-medium">${searchJudgementsSheetModalTitle}</div>
+                    <div class="block block-strong">
+                        <div class="row">
+
+                            <div class="col-100">
+                                <div class="list no-hairlines-md margin-10-0">
+                                    <ul>
+                                        <li class="item-content item-input item-input-outline">
+                                            <div class="item-inner">
+                                                <div class="item-title item-floating-label">Judgments</div>
+                                                <div class="item-input-wrap">
+                                                    <input type="text" placeholder="Search the full text of judgements" class="" />
+                                                    <span class="input-clear-button" />
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-100">
+                                <div class="list no-hairlines-md margin-10-0">
+                                    <ul>
+                                        <li class="item-content item-input item-input-outline">
+                                            <div class="item-inner">
+                                                <div class="item-title item-floating-label">From Date</div>
+                                                <div class="item-input-wrap">
+                                                    <input type="date" placeholder="Search by judgment date" class="" />
+                                                    <span class="input-clear-button" />
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-100">
+                                <div class="list no-hairlines-md margin-10-0">
+                                    <ul>
+                                        <li class="item-content item-input item-input-outline">
+                                            <div class="item-inner">
+                                                <div class="item-title item-floating-label">To Date</div>
+                                                <div class="item-input-wrap">
+                                                    <input type="date" placeholder="Search by judgment date" class="" />
+                                                    <span class="input-clear-button" />
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-100">
+                                <div class="list no-hairlines-md margin-10-0">
+                                    <ul>
+                                        <li class="item-content item-input item-input-outline">
+                                            <div class="item-inner">
+                                                <div class="item-title item-floating-label">Judge</div>
+                                                <div class="item-input-wrap">
+                                                    <input type="text" placeholder="Enter the Judge name" class="" />
+                                                    <span class="input-clear-button" />
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="padding: 16px;">
+                            <button class="col button button-raised button-fill button-large" @click=${viewAll}>Search Judgements</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+
+    import images from '../../../libs/images.js';
+
+    import konstants from '../../../libs/konstants.js';
+
+    import recentItems from '../../../storage/data/recent/manifest.json';
+
+    export default (props, { $f7, $f7ready, $f7route, $update, $on, $h, $store }) => {
+
+        let recentItemsSheetModalTitle = $store.getters.recentItemsSheetModalTitle.value;
+
+        let searchJudgementsSheetModalTitle = "Search Judgements";
+
+        let itemCategory = "";
+
+        $on('pageMounted', (e, page) => {
+            console.log('page mounted');
+        });
+        $on('pageInit', (e, page) => {
+            console.log('page init');
+            readRecentManifestFile();
+        });
+        $on('pageBeforeIn', (e, page) => {
+            console.log('page before in');
+        });
+        $on('pageAfterIn', (e, page) => {
+            console.log('page after in');
+            app.preloader.hide();
+        });
+        $on('pageBeforeOut', (e, page) => {
+            console.log('page before out');
+        });
+        $on('pageAfterOut', (e, page) => {
+            console.log('page after out');
+        });
+        $on('pageBeforeUnmount', (e, page) => {
+            console.log('page before unmount');
+        });
+        $on('pageBeforeRemove', (e, page) => {
+            console.log('page before remove');
+        });
+
+        const homeThumbItems = [
+            {
+                img: images.judgements,
+                title: "Judgements",
+                category: "judgements",
+                openModal: true,
+                isArticle: true,
+            },
+            {
+                img: images.legislation,
+                title: "Legislation",
+                category: "legislation",
+                openModal: true,
+                isArticle: true,
+            },
+            {
+                img: images.gazettes,
+                title: "Gazettes",
+                category: "gazettes",
+                openModal: true,
+                isArticle: true,
+            },
+            {
+                img: images.covid,
+                title: "Covid-19",
+                category: "covid",
+                openModal: false,
+                isArticle: false,
+            },
+            {
+                img: images.library,
+                title: "My Library",
+                category: "library",
+                openModal: false,
+                isArticle: false,
+            },
+            {
+                img: images.search,
+                title: "Search",
+                category: "search",
+                openModal: true,
+                isArticle: false,
+            },
+        ];
+
+        let recentItemsSheetModalList = [];
+
+        let recentItemsSheetModal = null;
+
+        let searchSheetModal = null;
+
+        let recentItemsObject = {
+            judgements: [],
+            legislation: [],
+            gazettes: [],
+            covid: []
+        };
+
+        const recentItemsError = (item) => {
+
+        };
+
+        const recentSheetModalOpen = () => {
+
+            // Create swipe-to-close Sheet
+            recentItemsSheetModal = app.sheet.create({
+                el: '.recent-items-swipe-to-close',
+                swipeToClose: true,
+                backdrop: true,
+            });
+
+            recentItemsSheetModal.open();
+
+        };
+
+        const recentSheetModalClose = () => {
+
+            recentItemsSheetModal.close();
+
+        };
+
+        const searchSheetModalOpen = () => {
+
+            // Create swipe-to-close Sheet
+            searchSheetModal = app.sheet.create({
+                el: '.search-swipe-to-close',
+                swipeToClose: true,
+                backdrop: true,
+            });
+
+            searchSheetModal.open();
+
+        };
+
+        const viewAll = () => {
+
+            console.log(":: viewAll :: itemCategory ::", itemCategory);
+
+            switch (itemCategory){
+
+                case "judgements" : {
+                    $f7.tab.show("#view-judgements");
+                    break;
+                }
+
+                case "legislation" : {
+                    $f7.tab.show("#view-legislation");
+                    break;
+                }
+
+                case "gazettes" : {
+                    $f7.tab.show("#view-gazettes");
+                    break;
+                }
+
+                default : {
+                    $f7.tab.show("#view-home");
+                    break;
+                }
+
+            }
+
+            recentSheetModalClose();
+
+        };
+
+        const openViewFromHomeSheetModal = ( item ) => {
+
+            console.log(":: openViewFromHomeSheetModal :: itemCategory :: item ::", itemCategory, item);
+
+            switch (itemCategory){
+
+                case "judgements" : {
+                    $f7.views.current.router.navigate(
+                        '/judgements/',
+                        {
+                            reloadCurrent: false,
+                            animate: true
+                        }
+                    );
+                    break;
+                }
+
+                case "legislation" : {
+
+                    const _letter = item.letter;
+                    const _slug = item.slug;
+
+                    $f7.views.current.router.navigate(
+                        `/legislation-cover/${_letter}/${_slug}/`,
+                        {
+                            reloadCurrent: false,
+                            animate: true
+                        }
+                    );
+                    break;
+                }
+
+                case "gazettes" : {
+
+                    const _year = item.year;
+                    const _index = item.index;
+
+                    $f7.views.current.router.navigate(
+                        `/gazette/${_year}/${_index}/`,
+                        {
+                            reloadCurrent: false,
+                            animate: true
+                        }
+                    );
+                    break;
+                }
+
+                default : {
+                    $f7.views.current.router.navigate(
+                        '/home/',
+                        {
+                            reloadCurrent: false,
+                            animate: true
+                        }
+                    );
+                    break;
+                }
+
+            }
+
+            recentSheetModalClose();
+
+        };
+
+        const recentSheetModalOpenThumb = (item) => {
+
+            itemCategory = item.category.toLowerCase();
+
+            const itemTitle = item.title;
+
+            console.log(":: updateRecentItemsSheetTitle :: itemTitle :: itemCategory ::", itemTitle, itemCategory);
+
+            $store.dispatch('updateRecentItemsSheetModalTitle', 'Recent '+itemTitle);
+
+            setTimeout(function () {
+
+                $update();
+
+            },2000);
+
+            let openModal = true;
+
+            switch (itemCategory) {
+
+                case "judgements" : {
+
+                    $store.dispatch("updateRecentItemsSheetModalTitle", "Recent Judgements / Cases");
+
+                    getRecentJudgements().then((res)=>{
+
+                        console.log(":: recentSheetModalOpenThumb :: getRecentJudgements ::", recentItemsSheetModalList);
+
+                        recentItemsSheetModalList = res;
+
+                        $store.dispatch('updateRecentItemsSheetModalList', res);
+
+                        console.log(":: recentSheetModalOpenThumb :: getRecentJudgements ::", res);
+
+                        $update();
+
+                    }).catch((error) => {
+
+                        recentItemsError(error, item.category.toLowerCase());
+
+                    });
+
+                    break;
+                }
+
+                case "legislation" : {
+
+                    $store.dispatch("updateRecentItemsSheetModalTitle", "Recent Legislation");
+
+                    getRecentLegislation().then((res)=>{
+
+                        console.log(":: recentSheetModalOpenThumb :: getRecentLegislation ::", recentItemsSheetModalList);
+
+                        recentItemsSheetModalList = res;
+
+                        $store.dispatch('updateRecentItemsSheetModalList', res);
+
+                        console.log(":: recentSheetModalOpenThumb :: getRecentLegislation ::", res);
+
+                        $update();
+
+                    }).catch((error) => {
+
+                        recentItemsError(error, item.category.toLowerCase());
+
+                    });
+
+                    break;
+                }
+
+                case "gazettes" : {
+
+                    $store.dispatch("updateRecentItemsSheetModalTitle", "Recent Gazettes");
+
+                    getRecentGazettes().then((res)=>{
+
+                        console.log(":: recentSheetModalOpenThumb :: getRecentGazettes ::", recentItemsSheetModalList);
+
+                        recentItemsSheetModalList = res;
+
+                        $store.dispatch('updateRecentItemsSheetModalList', res);
+
+                        console.log(":: recentSheetModalOpenThumb :: getRecentGazettes ::", res);
+
+                        $update();
+
+                    }).catch((error) => {
+
+                        recentItemsError(error, item.category.toLowerCase());
+
+                    });
+
+                    break;
+                }
+
+                case "covid" : {
+
+                    $store.dispatch("updateRecentItemsSheetModalTitle", "Recent Covid Legislation");
+
+                    getRecentCovid().then((res)=>{
+
+                        console.log(":: recentSheetModalOpenThumb :: getRecentCovid ::", recentItemsSheetModalList);
+
+                        recentItemsSheetModalList = res;
+
+                        $store.dispatch('updateRecentItemsSheetModalList', res);
+
+                        console.log(":: recentSheetModalOpenThumb :: getRecentCovid ::", res);
+
+                        $update();
+
+                    }).catch((error) => {
+
+                        recentItemsError(error, item.category.toLowerCase());
+
+                    });
+
+                    break;
+
+                }
+
+                case "library" : {
+
+                    $f7.views.current.router.navigate(
+                        '/library/',
+                        {
+                            reloadCurrent: false,
+                            animate: true
+                        }
+                    );
+
+                    openModal = false;
+
+                    break;
+
+                }
+
+                case "search" : {
+
+                    searchSheetModalOpen();
+
+                    openModal = false;
+
+                    break;
+
+                }
+
+                default : {
+
+                    break;
+
+                }
+
+            }
+
+            if(openModal){
+
+                recentSheetModalOpen();
+
+            }
+
+            $update();
+
+        };
+
+        const getRecentJudgements = async () => {
+
+            return recentItemsObject.judgements;
+
+        };
+
+        const getRecentLegislation = async () => {
+
+            return recentItemsObject.legislation;
+
+        };
+
+        const getRecentGazettes = async () => {
+
+            return recentItemsObject.gazettes;
+
+        };
+
+        const getRecentCovid = async () => {
+
+            return recentItemsObject.covid;
+
+        };
+
+        const loadRecentPage = async ( ) => {
+
+            $f7.preloader.show();
+
+            $f7.progressbar.show('multi');
+
+            const path = 'recent-items/';
+
+            const file = 'manifest.json';
+
+            const fullPath = path + '/' +  file;
+
+            $f7.request.get( konstants.appUrl + '/' + konstants.appRecentItemsUrl)
+                .then(function (res) {
+
+                    if(res.status === 200) {
+
+                        let contents = res.data;
+
+                        CapFilesystem.writeFile({
+                            path: fullPath,
+                            data: contents,
+                            directory: CapDirectory.External,
+                            encoding: CapEncoding.UTF8,
+                            recursive: true
+                        }).then(function (writtenData) {
+
+                            console.log("::writtenData::", writtenData.uri);
+
+                            parseJsonRecentManifestFile( contents );
+
+                        });
+
+                        $f7.preloader.hide();
+
+                        $f7.progressbar.hide();
+
+                    }else{
+
+                        $f7.preloader.hide();
+
+                        $f7.progressbar.hide();
+
+                        $f7.dialog.alert("Failed to load file. Please check your internet settings.");
+
+                    }
+
+                })
+                .catch(function (err) {
+
+                    $f7.preloader.hide();
+
+                    $f7.progressbar.hide();
+
+                    $f7.dialog.alert("Failed to download PDF file. Please check your internet settings.");
+
+                    console.log(err.xhr)
+                    console.log(err.status)
+                    console.log(err.message)
+                });
+
+            $update();
+
+        }
+
+        const readRecentManifestFile = async () => {
+
+            $f7.preloader.show();
+
+            $f7.progressbar.show('multi');
+
+            const path = /recent-items/;
+
+            const file = 'manifest.json';
+
+            const fullPath = path + '/' +  file;
+
+            CapFilesystem.readFile({
+                path: fullPath,
+                directory: CapDirectory.External ,
+                encoding: CapEncoding.UTF8,
+            }).then(function ( contents ){
+
+                console.log(":: RECENT MANIFESTS FILE FOUND ::", [fullPath, contents.data]);
+
+                parseJsonRecentManifestFile( contents.data );
+
+            },function ( error){
+
+                loadRecentPage();
+
+            });
+
+        };
+
+        const parseJsonRecentManifestFile = ( manifestFile ) => {
+
+            if (typeof manifestFile !== "object") {
+
+                manifestFile = JSON.parse(manifestFile);
+
+            }
+
+            console.log("::parseJsonRecentManifestFile:FILE:", manifestFile);
+
+            recentItemsObject = manifestFile;
+
+            if(recentItemsObject.judgements.length === 0){
+                recentItemsObject.judgements = recentItems.judgements;
+            }
+
+            if(recentItemsObject.legislation.length === 0){
+                recentItemsObject.legislation = recentItems.legislation;
+            }
+
+            if(recentItemsObject.gazettes.length === 0){
+                recentItemsObject.gazettes = recentItems.gazettes;
+            }
+
+            if(recentItemsObject.covid.length === 0){
+                recentItemsObject.covid = recentItems.covid;
+            }
+
+            $f7.preloader.hide();
+
+            $f7.progressbar.hide();
+
+            $update();
+
+        };
+
+        $update();
+
+        return $render;
+
+    }
+</script>

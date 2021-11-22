@@ -1,0 +1,86 @@
+<template>
+    <div class="page" data-name="about">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">Help</div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="list simple-list contacts-list indexed-list-init">
+
+                ${$store.getters.getLegislations.value.map((item, index) => $h`
+
+                <div class="list-group">
+                    <ul>
+                        <li class="list-group-title">${item}</li>
+
+                        <li>
+                            ChildrenHere
+                        </li>
+
+
+
+                    </ul>
+                </div>
+
+                `)}
+
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+
+    import images from '../../../libs/images.js';
+
+    import legislation from '../../../storage/data/legislation/legislation.json';
+
+    export default (props, { $f7, $f7ready, $f7route, $update, $on, $h, $store }) => {
+
+        $on('pageMounted', (e, page) => {
+            console.log('page mounted');
+        });
+        $on('pageInit', (e, page) => {
+            console.log('page init');
+
+            console.log(":: legislation ::", legislation);
+
+            $f7.on("REFRESH_RECENT_ITEMS", function (){
+
+                $update();
+
+            });
+
+        });
+        $on('pageBeforeIn', (e, page) => {
+            console.log('page before in');
+        });
+        $on('pageAfterIn', (e, page) => {
+            console.log('page after in');
+        });
+        $on('pageBeforeOut', (e, page) => {
+            console.log('page before out');
+        });
+        $on('pageAfterOut', (e, page) => {
+            console.log('page after out');
+        });
+        $on('pageBeforeUnmount', (e, page) => {
+            console.log('page before unmount');
+        });
+        $on('pageBeforeRemove', (e, page) => {
+            console.log('page before remove');
+        });
+
+
+
+        return $render;
+
+    }
+</script>
