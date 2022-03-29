@@ -55,3 +55,4 @@ resources/windows/splash
 # Production build
 www/
 node_modules/
+*.rar
